@@ -1,0 +1,2 @@
+{"layers":[{"source":"precomputed://https://s3.amazonaws.com/zbrain/ZBrain/Anti_5HT_MeanOf40","type":"image","name":"Anti_5HT_MeanOf40"}],"navigation":{"pose":{"position":{"voxelSize":[798,798,2000],"voxelCoordinates":[703,310.5,69]}},"zoomFactor":798},"layout":"4panel"}
+
