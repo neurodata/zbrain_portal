@@ -1,8 +1,115 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import GlancerJson from './GlancerJson';
 
+/* ZbrainForm Class */ 
+class ZbrainForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sourcePrefix:   "precomputed://https://s3.amazonaws.com/zbrain/ZBrain/", 
+      sourceFile:     "source_short.csv", 
+      requestPrefix:  "https://viz.neurodata.io", 
+
+      glancerJson: new GlancerJson(), 
+    }
+    
+    // init source list 
+    this.initSources();
+    
+    // handle form changed 
+    this.handleSrcChange = this.handleSrcChange.bind(this);
+    this.handleCrdChange = this.handleCrdChange.bind(this);
+    
+    // submit json
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  initSources() {
+        // init all source names from reading a local csv file 
+        var text = readFile(this.state.sourceFile);
+        var names = text.split("\n");
+        this.state.sources = names; 
+
+  }
+
+  // ############### Handlers #################### 
+
+  handleSrcChange(event) {
+    const value = event.target.value;
+    this.state.glancerJson.setName(value);
+    this.state.glancerJson.setSource(this.state.sourcePrefix + value); 
+  }
+
+  handleCrdChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    if (name === 'x') {
+      this.state.glancerJson.setCoordinate(value, 0);
+    }
+    else if (name === 'y') {
+      this.state.glancerJson.setCoordinate(value, 1);
+    }
+    else if (name === 'z') {
+      this.state.glancerJson.setCoordinate(value, 2);
+    }
+    event.preventDefault();
+  }
+
+  handleSubmit(event) {
+
+    var jsonText = JSON.stringify(this.state.glancerJson);
+    console.log(jsonText);
+    jsonText = encodeURI(jsonText);
+    var requestUrl = this.state.requestPrefix + "/#!" + jsonText; 
+    console.log(requestUrl);
+
+    const element = (
+      <iframe src={requestUrl} width="100%">
+        NeuroGlancer
+      </iframe>
+    );
+
+    ReactDOM.render(element, document.getElementById('glancer'));
+
+    event.preventDefault();
+  }
+
+  getSourceOptions(){
+    return (
+      this.state.sources.map((item) => <option value={item}> {item} </option>)
+    );
+  }
+
+
+  render() {
+    
+    return (
+      <form onSubmit={this.handleSubmit}>
+        
+        <label> Select channel 
+          <select name="source" value={this.state.value} onChange={this.handleSrcChange} >
+            {this.getSourceOptions()}
+          </select>
+        </label>
+
+        <label> Set coordinates 
+          <input name="x" type="number" onChange={this.handleCrdChange} onFocus={this.handleCrdChange} />
+          <input name="y" type="number" onChange={this.handleCrdChange} onFocus={this.handleCrdChange} />
+          <input name="z" type="number" onChange={this.handleCrdChange} onFocus={this.handleCrdChange} /> 
+        </label> 
+
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
 
 /* Utitlity */ 
 
+// TODO: make this method into the class 
 function readFile(file) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
@@ -16,120 +123,6 @@ function readFile(file) {
 }
 
 
-/* ZbrainForm Class */ 
-class ZbrainForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      source: "",
-      position_x: 0,
-      position_y: 0,
-      position_z: 0,
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState({[name]: value});
-
-
-/*
-    this.setState({
-      formControls: {
-        [name]: value
-      }
-    }); 
-*/
-    // this.setState({value: event.target.value});
-
-  }
-
-  handleSubmit(event) {
-
-    //var text = JSON.stringify(this.state);
-    console.log(this.state);
-//    console.log(JSON.stringify(this.state));
-/*
-    // selected value is this.state.value 
-    var url = 'https://viz.neurodata.io/';    
-    var jsonData = readFile('sample.json');
-    var text = JSON.stringify(jsonData); 
-    text = encodeURIComponent(text).replace("\"", """);
-    console.log(encodeURIComponent(text));
- 
-*/
-/*
-    fetch(
-      url+text, {
-        method: 'GET', // or 'PUT'
-        body: JSON.stringify(jsonData), // data can be `string` or {object}!
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => res.json())
-      .then(response => console.log('Success:', JSON.stringify(response)))
-      .catch(error => console.error('Error:', error));
-
-*/
-//    window.open(url + "#!" + text);
-
-
-
-    /*
-    fetch(url,
-
-      fetch(this.state.value)
-      .then(response => response.json())
-      .then((jsonData) => {
-        console.log(jsonData)
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-
-      alert('Select Channel is ' + this.state.value);
-      */
-    event.preventDefault();
-  }
-
-  render() {
-
-    // init all options 
-    var text = readFile('source_list.csv');
-    var options = text.split("\n");
-    this.state.options = options.map((item) => <option value={item}> {item} </option>); 
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-      <label>
-      Source 
-      <select name="source" value={this.state.source} onChange={this.handleChange}>
-      {this.state.options}
-      </select>
-      </label>
-
-      <label> 
-      Position 
-      <input name="position_x" type="number" value={this.state.position_x}
-      onChange={this.handleChange} /> 
-      <input name="position_y" type="number" value={this.state.position_y}
-      onChange={this.handleChange} /> 
-      <input name="position_z" type="number" value={this.state.position_z}
-      onChange={this.handleChange} /> 
-      </label> 
-
-
-      <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
 
 export default ZbrainForm; 
 
