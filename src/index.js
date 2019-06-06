@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import ChannelForm from './ChannelForm';
-import AtlasForm from'./AtlasForm'; 
+import Channels from './Channels';
 
-ReactDOM.render(<ChannelForm />, document.getElementById('channels_form'));
-ReactDOM.render(<AtlasForm />, document.getElementById('atlas_form'));
+ReactDOM.render(<Channels />, document.getElementById('forms'));
 
 serviceWorker.register(); // unregister for online 
