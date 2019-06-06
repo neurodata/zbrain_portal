@@ -67,7 +67,7 @@ class ZbrainForm extends React.Component {
     console.log(requestUrl);
 
     const element = (
-      <iframe src={requestUrl} width="100%">
+      <iframe src={requestUrl} width="100%" height="100%">
         NeuroGlancer
       </iframe>
     );
