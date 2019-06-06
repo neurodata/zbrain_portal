@@ -3,7 +3,7 @@
   Json object for generate request for neuroglancer 
 */ 
 
-class GlancerJson {
+class ChannelJson {
 
   constructor() {
 
@@ -16,16 +16,15 @@ class GlancerJson {
     this.navigation = {
       pose: {
         position: { 
-          voxelSize: [100, 100, 100],
-          voxelCoordinates: [100, 100, 100]
+          voxelSize: [798, 798, 2000],
+          voxelCoordinates: [703, 310.5, 69]
         },
-        zoomFactor: 100 
+        zoomFactor: 798 
       }
     };
 
     this.layout = "4panel"; 
   }
-
 
   // Setter and Getters for layers 
   setSource(newSource) {
@@ -86,4 +85,4 @@ class GlancerJson {
 
 }
 
-export default GlancerJson; 
+export default ChannelJson; 

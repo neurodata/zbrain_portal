@@ -1,19 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GlancerJson from './GlancerJson';
+import AtlasJson from './AtlasJson';
 
-/* ZbrainForm Class */ 
-class ZbrainForm extends React.Component {
+class AtlasForm extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      sourcePrefix:   "precomputed://https://s3.amazonaws.com/zbrain/ZBrain/", 
-      sourceFile:     "source_short.csv", 
-      requestPrefix:  "https://viz.neurodata.io", 
+      source:   "precomputed://https://s3.amazonaws.com/zbrain/atlas_owen", 
+      requestPrefix:  "https://zbrain.viz.neurodata.io/", 
 
-      glancerJson: new GlancerJson(), 
+      atlasJson: new AtlasJson(), 
     }
     
     // init source list 
@@ -21,7 +19,6 @@ class ZbrainForm extends React.Component {
     
     // handle form changed 
     this.handleSrcChange = this.handleSrcChange.bind(this);
-    this.handleCrdChange = this.handleCrdChange.bind(this);
     
     // submit json
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,28 +36,13 @@ class ZbrainForm extends React.Component {
 
   handleSrcChange(event) {
     const value = event.target.value;
-    this.state.glancerJson.setName(value);
-    this.state.glancerJson.setSource(this.state.sourcePrefix + value); 
+    this.state.atlasJson.addSeg(value);
   }
 
-  handleCrdChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-    if (name === 'x') {
-      this.state.glancerJson.setCoordinate(value, 0);
-    }
-    else if (name === 'y') {
-      this.state.glancerJson.setCoordinate(value, 1);
-    }
-    else if (name === 'z') {
-      this.state.glancerJson.setCoordinate(value, 2);
-    }
-    event.preventDefault();
-  }
 
   handleSubmit(event) {
 
-    var jsonText = JSON.stringify(this.state.glancerJson);
+    var jsonText = JSON.stringify(this.state.atlasJson);
     console.log(jsonText);
     jsonText = encodeURI(jsonText);
     var requestUrl = this.state.requestPrefix + "/#!" + jsonText; 
@@ -77,31 +59,24 @@ class ZbrainForm extends React.Component {
     event.preventDefault();
   }
 
-  getSourceOptions(){
-    return (
-      this.state.sources.map((item) => <option value={item}> {item} </option>)
-    );
-  }
 
 
   render() {
     
     return (
+      
       <form onSubmit={this.handleSubmit}>
+        <label> Atlas </label>  
         
-        <label> Select channel 
+        <label> SELECT SIGMENT 
           <select name="source" value={this.state.value} onChange={this.handleSrcChange} >
-            {this.getSourceOptions()}
+            <option value="1"> foo </option>
+            <option value="2"> bar </option>
+            <option value="3"> zoo </option>
           </select>
         </label>
 
-        <label> Set coordinates 
-          <input name="x" type="number" onChange={this.handleCrdChange} onFocus={this.handleCrdChange} />
-          <input name="y" type="number" onChange={this.handleCrdChange} onFocus={this.handleCrdChange} />
-          <input name="z" type="number" onChange={this.handleCrdChange} onFocus={this.handleCrdChange} /> 
-        </label> 
-
-        <input type="submit" value="Submit" />
+        <input type="submit" value="SUBMIT" />
       </form>
     );
   }
@@ -123,6 +98,5 @@ function readFile(file) {
 }
 
 
-
-export default ZbrainForm; 
+export default AtlasForm; 
 
