@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import RequestJson from './RequestJson'; 
+import { func } from 'prop-types';
 
 class Channels extends React.Component {
   
@@ -112,13 +113,6 @@ class Channels extends React.Component {
   
   }
 
-  handleSrcChange(event) {
-
-  }
-
-  handleSubmit(event) {
-
-  }
 
   getSourceOptions(){
     return (
@@ -126,6 +120,12 @@ class Channels extends React.Component {
     );
   }
 
+  getSegmentOptions() {
+    const segments = readFile('segments.csv').split('\n');
+    return (
+      segments.map((value, index) => <option value={index}> {value} </option> )
+    );
+  }
 
   render() {
     
@@ -143,11 +143,12 @@ class Channels extends React.Component {
       </form>
     
       <form onSubmit={this.handleSubmitSegment}>
-          <label> SELECT SIGMENT
+          <label> SELECT SEGMENT
             <select name="source" value={this.state.value} onChange={this.handleSelectSegment} >
-              <option value="1">  1: Midbrain: Tectum  </option>
+              {this.getSegmentOptions()} 
+              {/* <option value="1">  1: Midbrain: Tectum  </option>
               <option value="2">  2: Midbrain: Torus Longitudinalis  </option>
-              <option value="3">  3: Midbrain: Torus Semicircularis  </option>
+              <option value="3">  3: Midbrain: Torus Semicircularis  </option> */}
             </select>
           </label>
       <input type="submit" value="ADD SEGMENT" />
