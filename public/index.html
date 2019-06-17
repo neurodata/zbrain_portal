@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- bootstrap style sheet -->
+    <link rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -21,18 +27,35 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+
+    <!-- bootstrap -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!--
+      Deprecate bootstrap, comeback later
+    <script crossorigin src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" > </script>
+    <script>var Alert = ReactBootstrap.Alert;</script>
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+    />
+
+
+  -->
+
+
+    <title>Zbrain Neuroglancer</title>
   </head>
-  
+
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript> 
+    <noscript>You need to enable JavaScript to run this app.</noscript>
 
-    <div id='root' class="w3-row">
-
-      <div id='forms' class="w3-col w3-container m4 l3"> </div>
-
-      <div id='glancer' class="w3-col w3-container m8 l9"> </div>
+    <div id='root'>
+      <!-- <div id='glancer' className='flex-item'> </div>  -->
     </div>
-    
+
   </body>
 </html>

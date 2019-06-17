@@ -1,0 +1,36 @@
+
+- Zbrain
+  state:
+    - Default Layer:
+      {atlas and reference}
+      Atlas -> Layer info and segments
+      Reference -> layer and reference
+
+    - color (check how color sements in located in the graph)
+
+    JsonRequest -> smaller components
+        - Channle -> Layer
+        - Atlas
+        - Reference
+        - Position
+
+  - sidebar
+    - select: update channel
+    - button: update JsonRequst
+    - checkbox
+
+  - glancer
+    - Pass state.JsonRequest
+    - Parse json and update all sidebar contents
+    - Onchange -> update this.props.JsonRequst
+
+
+
+TODO:
+  - Select
+    - Select a channel
+    - Propogate the result to viewer
+  - selection and talk to neuroglancer
+
+
+- use google in the iframe for testing

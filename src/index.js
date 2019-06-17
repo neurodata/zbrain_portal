@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import Channels from './Channels';
+import './util/index.css';
+import './util/logo.svg'
+import * as serviceWorker from './util/serviceWorker';
 
-ReactDOM.render(<Channels />, document.getElementById('forms'));
+import App from './App';
 
-serviceWorker.register(); // unregister for online 
+ReactDOM.render(<App />,
+  document.getElementById('root')
+);
+
+
+serviceWorker.register(); // unregister for online
