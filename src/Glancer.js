@@ -6,7 +6,17 @@ class Glancer extends React.Component {
   constructor(props) {
     super(props);
 
+    fetch(this.props.curUrl)
+    .then(function (repsponse) {
+        console.log("Fetch the data");
+        console.log(repsponse.body);
+    });
+
   }
+
+  componentDidMount() {
+  }
+
   render() {
     return(
       <Frame>
@@ -15,4 +25,4 @@ class Glancer extends React.Component {
   }
 }
 
-export default Glancer; 
+export default Glancer;

@@ -26,7 +26,7 @@ class App extends React.Component {
       segments: [],
 
       curRequest: fullRequest,
-      curUrl: "https://viz.neurodata.io/",
+      curUrl: "https://www.google.com/",
     };
 
 
@@ -101,6 +101,7 @@ class App extends React.Component {
 
         <div id='glancer' className='flex-item' ref='glancer'>
           <Glancer
+          curUrl={this.state.curUrl}
           />
         </div>
 
